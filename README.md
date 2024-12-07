@@ -9,9 +9,9 @@
 
  TASKS:
  1. db elastic search -> DONE!!
- 2. api using oauth -> todo
- 3. Email Data Synchronization ->todo
- 4. scalability -> to do
- 5. best practic -> todo
- 6. Extensibility ->todo
- 7. Deliverables docker ->done
+ 2. api using oauth -> (//todo//)
+ 3. Email Data Synchronization -> (//todo//)
+ 4. scalability -> (//todo//)
+ 5. best practic -> (//todo//)
+ 6. Extensibility -> (//todo//)
+ 7. Deliverables docker -> DONE!!

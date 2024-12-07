@@ -49,6 +49,7 @@ class SetupElasticsearch extends Command
         $mailboxMapping = [
             Constants::MAPPINGS => [
                 Constants::PROPERTIES => [
+                    Constants::USER_ID => [Constants::TYPE => Constants::KEYWORD],
                     Constants::EMAIL_ADDRESS => [Constants::TYPE => Constants::KEYWORD],
                     Constants::FOLDERS => [
                         Constants::TYPE => Constants::NESTED,
