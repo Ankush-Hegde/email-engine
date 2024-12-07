@@ -4,13 +4,14 @@
  3. migrate the database using 
  <code>php artisan migrate</code> command
  4. start the server using <code>php artisan start</code> command
+ 5. set up elastic search by using this command<code>php artisan elasticsearch:setup</code>
 
 
- to do:
- Deliverables docker ->done
- api using oauth ->to do
- db elastic search -> to do
- Email Data Synchronization ->todo
- scalability -> to do
- best practic -> todo
- Extensibility ->todo
+ TASKS:
+ 1. db elastic search -> DONE!!
+ 2. api using oauth -> todo
+ 3. Email Data Synchronization ->todo
+ 4. scalability -> to do
+ 5. best practic -> todo
+ 6. Extensibility ->todo
+ 7. Deliverables docker ->done

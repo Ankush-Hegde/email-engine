@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'elastic' => [
+        'host' => env('ELASTIC_HOST', 'http://localhost:9200'),
+        'user_name' => env('ELASTIC_USERNAME', 'elastic'),
+        'password' => env('ELASTIC_PASSWORD', 'sCC59KD2OH0c-59DVyJn'),
+    ],
+
 ];
