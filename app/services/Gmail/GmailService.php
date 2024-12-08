@@ -1,5 +1,5 @@
 <?php
 
-namespace App\Services\Gmail;
+namespace App\Services\GmailService;
 
 // write code for gmail o auth
