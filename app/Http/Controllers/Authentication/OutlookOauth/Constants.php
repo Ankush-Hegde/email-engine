@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Authentication;
+namespace App\Http\Controllers\Authentication\OutlookOauth;
 
 class Constants {
     const MESSAGE = 'message';
