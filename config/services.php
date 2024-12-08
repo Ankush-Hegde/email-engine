@@ -41,4 +41,10 @@ return [
         'password' => env('ELASTIC_PASSWORD', 'sCC59KD2OH0c-59DVyJn'),
     ],
 
+    'azure' => [
+        'client_id' => env('AZURE_APPLICATION_ID'),
+        'client_secret' => env('AZURE_CLIENT_SECRET'),
+        'redirect' => env('AZURE_REDIRECT_URI'),
+    ],
+
 ];
