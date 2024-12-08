@@ -12,10 +12,10 @@
  TASKS:
  1. db elastic search -> SUCCESS!! startedOn:07/12/2024 endedOn:07/12/2024
 
- 2. api using oauth -> DOING 
+ 2. api using oauth -> (//todo//)
 
  3. Email Data Synchronization -> (//todo//)
- 4. scalability -> (//todo//)
- 5. best practic -> (//todo//)
+ 4. scalability -> SUCCESS!! startedOn:08/12/2024 endedOn:08/12/2024
+ 5. best practic -> SUCCESS!! startedOn:08/12/2024 endedOn:08/12/2024
  6. Extensibility -> (//todo//)
- 7. Deliverables docker -> DONE!!
+ 7. Deliverables docker -> SUCCESS!! startedOn:07/12/2024 endedOn:07/12/2024
