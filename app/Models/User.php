@@ -9,6 +9,19 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    const NAME = 'name';
+    const EMAIL = 'email';
+    const PASSWORD = 'password';
+    const MICROSOFT_ID = 'microsoft_id';
+    const ACCESS_TOKEN = 'access_token';
+    const REFRESH_TOKEN = 'refresh_token';
+    const REMEMBER_TOKEN = 'remember_token';
+    const TOKEN_EXPIRES_IN = 'token_expires_in';
+    const EMAIL_VERIFIED_AT = 'email_verified_at';
+    
+    const TABLE_NAME = 'users';
+    
+    const ENTITY_NAME = 'user';
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -18,9 +31,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        self::NAME,
+        self::EMAIL,
+        self::PASSWORD,
+        self::MICROSOFT_ID,
+        self::ACCESS_TOKEN,
+        self::REFRESH_TOKEN,
+        self::TOKEN_EXPIRES_IN,
     ];
 
     /**
@@ -29,8 +46,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        self::PASSWORD,
+        self::ACCESS_TOKEN,
+        self::REFRESH_TOKEN,
+        self::REMEMBER_TOKEN,
     ];
 
     /**
@@ -41,8 +60,8 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            self::PASSWORD => 'hashed',
+            self::EMAIL_VERIFIED_AT => 'datetime',
         ];
     }
 }
