@@ -19,7 +19,7 @@ response
     "redirect_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=2fc8eb46-76ba-4ca4-b70f-aed8d77e3a56&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Fv1%2Foauth%2Foutlook%2Fcallback&scope=openid+offline_access+profile+email+Mail.ReadWrite+Mail.Read+Mail.Send"
 }
 ```
-### 1. callback
+### 2. callback
 <code>get</code><code>http://localhost:8000/api/v1/oauth/outlook/callback?code=E.V533_BW4.4.D.73cf-32-67-7a-ef0</code>
 
 response
