@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Authentication\OutlookOauth;
 
 class Constants {
+    const CODE = 'code';
+    const ERROR = 'error';
     const MESSAGE = 'message';
-    const MICROSOFT = 'microsoft';
+    const ID_TOKEN = 'id_token';
+    const EXPIRES_IN= 'expires_in';
+    const ERROR_DESCRIPTION = 'error_description';
+
     const SESSION_ID = 'session_id';
 }

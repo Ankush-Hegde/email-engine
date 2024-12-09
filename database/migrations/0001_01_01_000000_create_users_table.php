@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use app\Models\User;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string(User::NAME);
             $table->string(User::EMAIL)->unique();
             $table->timestamp(User::EMAIL_VERIFIED_AT)->nullable();
-            $table->string(User::PASSWORD);
+            $table->string(User::PASSWORD)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

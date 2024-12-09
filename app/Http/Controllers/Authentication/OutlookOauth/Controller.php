@@ -11,40 +11,53 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    public function generate_url(Request $request)
+    protected $OutlookService;
+    
+    public function __construct()
     {
-        $OutlookService = new OutlookService();
-        
-        return $OutlookService->generateAuthUrl();
+        $this->OutlookService = new OutlookService();
+    }
+
+    public function generate_url(Request $request)
+    {        
+        return $this->OutlookService->generateAuthUrl();
     }
 
     public function callback(Request $request)
     {
-        // try {
-        //     $outlookUser = Socialite::driver(CONSTANTS::MICROSOFT)->user();
+        $code = $request->get(Constants::CODE);
 
-        //     // Check if the local user exists
-        //     $user = User::where(User::EMAIL, $outlookUser->getEmail())->first();
+        if (!$code) {
+            return response()->json([Constants::ERROR => 'Authorization code not found.'], 400);
+        }
 
-        //     if (!$user) {
-        //         return response()->json([CONSTANTS::MESSAGE => 'User not found. Please register first.'], 404);
-        //     }
+        $tokens = $this->OutlookService->getTokens($code);
 
-        //     // Link the Outlook account
-        //     $user->update([
-        //         User::MICROSOFT_ID => $outlookUser->getId(),
-        //         User::ACCESS_TOKEN => $outlookUser->token,
-        //         User::REFRESH_TOKEN => $outlookUser->refreshToken,
-        //         User::TOKEN_EXPIRES_IN => $outlookUser->expiresIn,
-        //     ]);
+        if (isset($tokens[Constants::ERROR])) {
+            return response()->json([
+                Constants::ERROR => $tokens[Constants::ERROR],
+                Constants::ERROR_DESCRIPTION => $tokens[Constants::ERROR_DESCRIPTION],
+            ], 400);
+        }
 
-        //     return response()->json([
-        //         CONSTANTS::MESSAGE => 'Outlook account linked successfully!',
-        //         User::ENTITY_NAME => $user,
-        //     ]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => 'Authentication failed.', 'details' => $e->getMessage()], 500);
-        // }
+        if (!isset($tokens[User::ACCESS_TOKEN])) {
+            return response()->json([Constants::ERROR => 'Access token not found.'], 400);
+        }
+
+        $idToken = explode('.', $tokens[Constants::ID_TOKEN])[1];
+        $userDetails = json_decode(base64_decode($idToken), true);
+
+        $user = User::updateOrCreate(
+            [User::EMAIL => $userDetails[User::EMAIL]],
+            [
+                User::NAME => $userDetails[User::NAME],
+                User::ACCESS_TOKEN => $tokens[User::ACCESS_TOKEN],
+                User::REFRESH_TOKEN => $tokens[User::REFRESH_TOKEN],
+                User::TOKEN_EXPIRES_IN => now()->addSeconds($tokens[Constants::EXPIRES_IN]),
+            ]
+        );
+
+        return response()->json([Constants::MESSAGE => 'User registered successfully', User::ENTITY_NAME => $user]);
     }
 
     public function register(Request $request)
@@ -52,13 +65,11 @@ class Controller extends BaseController
         $validated = $request->validate([
             User::NAME => 'required|string|max:255',
             User::EMAIL => 'required|email|unique:users,email',
-            User::PASSWORD => 'required|string|min:8',
         ]);
 
         $user = User::create([
             User::NAME => $validated[User::NAME],
             User::EMAIL => $validated[User::EMAIL],
-            User::PASSWORD => bcrypt($validated[User::PASSWORD]),
         ]);
 
         return response()->json([

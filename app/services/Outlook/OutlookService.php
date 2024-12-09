@@ -35,12 +35,27 @@ class OutlookService
     {
         $url = "https://login.microsoftonline.com/common/oauth2/v2.0/token"; // keep in env
 
-        $response = Http::asForm()->post($url, [
+        $response = Http::asForm()->withOptions(['verify' => false])->post($url, [ // ssl certificate ignored
             Constants::CLIENT_ID => $this->clientId,
             Constants::CLIENT_SECRET => $this->clientSecret,
             Constants::CODE => $code,
             Constants::REDIRECT_URI => $this->redirectUri,
             Constants::GRANT_TYPE => Constants::AUTHORIZATION_CODE,
+        ]);
+
+        return $response->json();
+    }
+
+    public function refreshAccessToken($refreshToken)
+    {
+        $url = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+
+        $response = Http::asForm()->withOptions(['verify' => false])->post($url, [ // ssl certificate ignored 
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'refresh_token' => $refreshToken,
+            'grant_type' => 'refresh_token',
+            'redirect_uri' => $this->redirectUri,
         ]);
 
         return $response->json();
