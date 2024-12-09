@@ -25,4 +25,16 @@ class Constants {
     const OFFLINE_ACCESS = 'offline_access';
     const MAIL_READEWRITE = 'Mail.ReadWrite';
     const AUTHORIZATION_CODE = 'authorization_code';
+
+    const TEXT = 'Text';
+    const BODY = 'body';
+    const MESSAGE = 'message';
+    const SUBJECT = 'subject';
+    const CONTENT = 'content';
+    const ADDRESS = 'address';
+    const CONTENT_TYPE = 'Content-Type';
+    
+    const ContentType = 'contentType';
+    const EmailAddress= 'emailAddress';
+    const ToRecipients = 'toRecipients';
 }

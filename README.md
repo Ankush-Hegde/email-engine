@@ -84,6 +84,23 @@ response
     }
 ]
 ```
+### 4. send Mail
+<code>post</code><code>http://localhost:8000/api/v1/email/send</code>
+<br>body<br>
+```
+{
+    "email": "kellbooby8@gmail.com",
+    "subject": "test email",
+    "body": "success!!",
+    "toRecipients": ["ar@gmail.com"]
+}
+```
+response<br>
+```
+{
+    "message": "Email sent successfully"
+}
+```
 
 # DB design
  as of the requirements,

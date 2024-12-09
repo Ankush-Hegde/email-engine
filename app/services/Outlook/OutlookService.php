@@ -63,12 +63,38 @@ class OutlookService
 
     public function fetchEmails($accessToken, $top = 50, $skip = 0)
     {
+        $url = "https://graph.microsoft.com/v1.0/me/messages";
+
         $response = Http::withHeaders([
             Constants::AUTHORIZATION => Constants::BEARER . ' ' . $accessToken,
             Constants::ACCEPT => 'application/json',
-        ])->withOptions([Constants::VERIFY => false])->get('https://graph.microsoft.com/v1.0/me/messages', [
+        ])->withOptions([Constants::VERIFY => false])->get($url, [
             '$top' => $top,
             '$skip' => $skip,
+        ]);
+
+        return $response->json();
+    }
+
+    public function sendEmail($accessToken, $subject, $bodyContent, $recipients)
+    {
+        $url = "https://graph.microsoft.com/v1.0/me/sendMail";
+
+        $response = Http::withHeaders([
+            Constants::AUTHORIZATION => Constants::BEARER . ' ' . $accessToken,
+            Constants::ACCEPT => 'application/json',
+            Constants::CONTENT_TYPE => 'application/json',
+        ])->withOptions([Constants::VERIFY => false])->post($url, [
+            Constants::MESSAGE => [
+                Constants::SUBJECT => $subject,
+                Constants::BODY => [
+                    Constants::ContentType => Constants::TEXT,
+                    Constants::CONTENT => $bodyContent,
+                ],
+                Constants::ToRecipients => array_map(function ($email) {
+                    return [Constants::EmailAddress => [Constants::ADDRESS => $email]];
+                }, $recipients),
+            ],
         ]);
 
         return $response->json();

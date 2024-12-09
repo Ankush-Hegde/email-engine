@@ -87,4 +87,53 @@ class Controller extends BaseController
         
         return response()->json($emailResults[Constants::HITS][Constants::HITS], 200);
     }
+
+    public function sendEmail(Request $request)
+    {
+        $email = $request->input(User::EMAIL);
+        $subject = $request->input(Constants::SUBJECT);
+        $bodyContent = $request->input(Constants::BODY);
+        $recipients = $request->input(Constants::ToRecipients);
+
+        if (!$email || !$subject || !$bodyContent || !$recipients) {
+            return response()->json([
+                Constants::MESSAGE => 'Missing required fields: email, subject, body, or recipients.',
+            ], 400);
+        }
+
+        $user = User::where(User::EMAIL, $email)->first();
+        if (!$user) {
+            return response()->json([Constants::MESSAGE => 'User not found'], 404);
+        }
+
+        $refreshToken = $user->refresh_token;
+
+        $tokens = $this->OutlookService->refreshAccessToken($refreshToken);
+
+        if (isset($tokens[Constants::ERROR])) {
+            return response()->json([
+                Constants::MESSAGE => 'Failed to refresh access token',
+                Constants::ERROR => $tokens[Constants::ERROR_DESCRIPTION] ?? 'Unknown error',
+            ], 400);
+        }
+
+        $user->update([
+            User::ACCESS_TOKEN => $tokens[User::ACCESS_TOKEN],
+            User::REFRESH_TOKEN => $tokens[User::REFRESH_TOKEN] ?? $refreshToken,
+            User::TOKEN_EXPIRES_IN => now()->addSeconds($tokens[Constants::EXPIRES_IN]),
+        ]);
+
+        $accessToken = $tokens[User::ACCESS_TOKEN];
+
+        $response = $this->OutlookService->sendEmail($accessToken, $subject, $bodyContent, $recipients);
+
+        if (isset($response[Constants::ERROR])) {
+            return response()->json([
+                Constants::MESSAGE => 'Failed to send email',
+                Constants::ERROR => $response[Constants::ERROR][Constants::MESSAGE] ?? 'Unknown error',
+            ], 400);
+        }
+
+        return response()->json([Constants::MESSAGE => 'Email sent successfully'], 200);
+    }
 }

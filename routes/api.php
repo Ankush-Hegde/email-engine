@@ -24,5 +24,6 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::group(['prefix' => 'email'], function() {
         Route::post('fetch', [EmailController::class, 'fetchEmails']);
+        Route::post('send', [EmailController::class, 'sendEmail']);
     });
 });
