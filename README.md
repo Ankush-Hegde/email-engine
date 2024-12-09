@@ -27,6 +27,64 @@ response
 this will return view
 ```
 
+### 3. fetchMail from the microsoft graph api
+<code>post</code><code>http://localhost:8000/api/v1/email/fetch</code>
+<br>
+body json
+```
+{
+    "email" : "kellbooby8@gmail.com" // used as a session for the simplicity
+}
+```
+
+response
+```
+[
+    {
+        "_index": "emails",
+        "_id": "AQMkADAwATM3ZmYAZS02ZTLTAwCgBGAAADMAO-kHNvAU_QWj_itP_POwcA4KYOSSojDkC6diOE8kTG-gAAAgEJAAAA4KYOSSojDkC6diOE8kTG-gABGOFl4gAAAA==",
+        "_score": 0.18232156,
+        "_source": {
+            "user_id": 2,
+            "subject": "Meeting Reminder",
+            "body": "This is a reminder for our meeting.",
+            "from": "kellboby8@gmail.com",
+            "to": [
+                {
+                    "emailAddress": "ar@gmail.com"
+                }
+            ],
+            "cc": [],
+            "bcc": [],
+            "is_read": true,
+            "received_date": "2024-12-08T12:47:45Z",
+            "sent_date": "2024-12-08T12:47:44Z"
+        }
+    },
+    {
+        "_index": "emails",
+        "_id": "AQMkADAwATM3ZmYACLTAwCgBGAAADMAO-kHNvAU_QWj_itP_POwcA4KYOSSojDkC6diOE8kTG-gAAAgEJAAAA4KYOSSojDkC6diOE8kTG-gABGOFl4QAAAA==",
+        "_score": 0.18232156,
+        "_source": {
+            "user_id": 2,
+            "subject": "Meeting Reminder",
+            "body": "This is a reminder for our meeting.",
+            "from": "kellboby8@gmail.com",
+            "to": [
+                {
+                    "emailAddress": "ar@gmail.com"
+                }
+            ],
+            "cc": [],
+            "bcc": [],
+            "is_read": true,
+            "received_date": "2024-12-08T12:47:19Z",
+            "sent_date": "2024-12-08T12:47:19Z"
+        }
+    }
+]
+```
+
 # DB design
  as of the requirements,
  1. need to have user_table, Oauth_table

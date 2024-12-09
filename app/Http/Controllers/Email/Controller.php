@@ -23,68 +23,68 @@ class Controller extends BaseController
 
     public function fetchEmails(Request $request)
     {
-        $email = $request->input('email');
+        $email = $request->input(User::EMAIL);
 
         $user = User::where(User::EMAIL, $email)->first();
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json([Constants::MESSAGE => 'User not found'], 404);
         }
 
         $refreshToken = $user->refresh_token;
 
         $tokens = $this->OutlookService->refreshAccessToken($refreshToken);
 
-        if (isset($tokens['error'])) {
+        if (isset($tokens[Constants::ERROR])) {
             return response()->json([
-                'message' => 'Failed to refresh access token',
-                'error' => $tokens['error_description'] ?? 'Unknown error',
+                Constants::MESSAGE => 'Failed to refresh access token',
+                Constants::ERROR => $tokens[Constants::ERROR_DESCRIPTION] ?? 'Unknown error',
             ], 400);
         }
 
         $user->update([
-            User::ACCESS_TOKEN => $tokens['access_token'],
-            User::REFRESH_TOKEN => $tokens['refresh_token'] ?? $refreshToken,
-            User::TOKEN_EXPIRES_IN => now()->addSeconds($tokens['expires_in']),
+            User::ACCESS_TOKEN => $tokens[User::ACCESS_TOKEN],
+            User::REFRESH_TOKEN => $tokens[User::REFRESH_TOKEN] ?? $refreshToken,
+            User::TOKEN_EXPIRES_IN => now()->addSeconds($tokens[Constants::EXPIRES_IN]),
         ]);
 
-        $accessToken = $tokens['access_token'];
+        $accessToken = $tokens[User::ACCESS_TOKEN];
 
         $emails = $this->OutlookService->fetchEmails($accessToken);
 
-        if (isset($emails['error'])) {
+        if (isset($emails[Constants::ERROR])) {
             return response()->json([
-                'message' => 'Failed to fetch emails',
-                'error' => $emails['error']['message'] ?? 'Unknown error',
+                Constants::MESSAGE => 'Failed to fetch emails',
+                Constants::ERROR => $emails[Constants::ERROR][Constants::MESSAGE] ?? 'Unknown error',
             ], 400);
         }
 
-        foreach ($emails['value'] as $email) {
+        foreach ($emails[Constants::VALUE] as $email) {
             $data = [
-                'user_id' => $user->id,
-                'subject' => $email['subject'],
-                'body' => $email['body']['content'],
-                'from' => $email['from']['emailAddress']['address'],
-                'to' => array_map(fn($r) => ['emailAddress' => $r['emailAddress']['address']], $email['toRecipients'] ?? []),
-                'cc' => array_map(fn($r) => ['emailAddress' => $r['emailAddress']['address']], $email['ccRecipients'] ?? []),
-                'bcc' => array_map(fn($r) => ['emailAddress' => $r['emailAddress']['address']], $email['bccRecipients'] ?? []),
-                'is_read' => $email['isRead'],
-                'received_date' => $email['receivedDateTime'],
-                'sent_date' => $email['sentDateTime'],
+                Constants::USER_ID => $user->id,
+                Constants::SUBJECT => $email[Constants::SUBJECT],
+                Constants::BODY => $email[Constants::BODY][Constants::CONTENT],
+                Constants::FORM => $email[Constants::FORM][Constants::EmailAddress][Constants::ADDRESS],
+                Constants::TO => array_map(fn($r) => [Constants::EmailAddress => $r[Constants::EmailAddress][Constants::ADDRESS]], $email[Constants::ToRecipients] ?? []),
+                Constants::CC => array_map(fn($r) => [Constants::EmailAddress => $r[Constants::EmailAddress][Constants::ADDRESS]], $email[Constants::CcRecipients] ?? []),
+                Constants::BCC => array_map(fn($r) => [Constants::EmailAddress => $r[Constants::EmailAddress][Constants::ADDRESS]], $email[Constants::BccRecipients] ?? []),
+                Constants::IS_READ => $email[Constants::IsRead],
+                Constants::RECEVIED_DATA => $email[Constants::ReceivedDateTime],
+                Constants::SENT_DATA => $email[Constants::SentDateTime],
             ];
         
-            $this->elasticsearchService->indexDocument('emails', $email['id'], $data);
+            $this->elasticsearchService->indexDocument(Constants::EMAILS, $email[Constants::ID], $data);
         }
 
         $searchQuery = [
-            'query' => [
-                'term' => [
-                    'user_id' => $user->id,
+            Constants::QUERRY => [
+                Constants::TERM => [
+                    Constants::USER_ID => $user->id,
                 ],
             ],
         ];
 
-        $emailResults = $this->elasticsearchService->search('emails', $searchQuery);
+        $emailResults = $this->elasticsearchService->search(Constants::EMAILS, $searchQuery);
         
-        return response()->json($emailResults['hits']['hits'], 200);
+        return response()->json($emailResults[Constants::HITS][Constants::HITS], 200);
     }
 }
