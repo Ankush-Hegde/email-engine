@@ -27,6 +27,26 @@ response
 this will return view
 ```
 
+# DB design
+ as of the requirements,
+ 1. need to have user_table, Oauth_table
+ where Oauth_table structure is
+
+  ```markdown
+  | :---: | :---: |
+  | id | int |
+  | user_id | int |
+  | provider_type | (google, microsoft) |
+  | access_token | string |
+  | refresh_token | string |
+  | expair_in | dateTime |
+  ```
+  we need to link oAuth table to user table with local user_id<br>
+  ```NOTE: as of now, everything is stored in the user table which need to  be corrected```
+
+  # middleware
+  we need to have session middleware, where session will be having the type to differenciate the outlook auth and the google auth, now lets assume that everything is hapaning only in the outlook email 
+
  ## TASKS: 
  [startedOn:07/12/2024] - [endedOn:09/12/2024]
  1. db elastic search -> SUCCESS!! [startedOn:07/12/2024] - [endedOn:07/12/2024]
