@@ -8,7 +8,8 @@
  5. run the following to generate the encryption key <code>php artisan key:generate</code>.
  6. set up elastic search by using this command<code>php artisan elasticsearch:setup</code>
  7. start the server using <code>php artisan start</code> command
-
+ 8. navigate to <code>localhost:8000</code> in browser and click on the outlook oauth 
+ 
 # API
 ### 1. generate_url
 <code>get</code><code>http://localhost:8000/api/v1/oauth/outlook/generate_url</code>
@@ -126,10 +127,10 @@ response<br>
  [startedOn:07/12/2024] - [endedOn:09/12/2024]
  1. db elastic search -> SUCCESS!! [startedOn:07/12/2024] - [endedOn:07/12/2024]
  2. api using oauth -> SUCCESS!! [startedOn:08/12/2024] - [endedOn:08/12/2024]
- 3. Email Data Synchronization -> (//todo//)
+ 3. Email Data Synchronization -> SUCCESS!! [startedOn:09/12/2024] - [endedOn:09/12/2024] we can improve it by automatically syncing the email
  4. scalability -> SUCCESS!! [startedOn:08/12/2024] - [endedOn:08/12/2024]
  5. best practic -> SUCCESS!! [startedOn:08/12/2024] - [endedOn:08/12/2024]
- 6. Extensibility -> (//todo//)
+ 6. Extensibility -> SUCCESS!! [startedOn:09/12/2024] - [endedOn:09/12/2024]
  7. Deliverables docker -> SUCCESS!! [startedOn:07/12/2024] - [endedOn:07/12/2024]
 
 view updated project on :- <code> https://github.com/Ankush-Hegde/email-engine </code>
