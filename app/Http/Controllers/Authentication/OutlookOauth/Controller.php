@@ -57,7 +57,7 @@ class Controller extends BaseController
             ]
         );
 
-        return redirect()->route('oauth.success')->with(User::ENTITY_NAME, $user);
+        return view('oauth.success')->with(User::ENTITY_NAME, $user);
     }
 
     public function register(Request $request)
