@@ -15,3 +15,7 @@ Route::get('/oauth/success', function () {
 Route::get('/manage-mails', function() {
     return view('manage-mails');
 });
+
+Route::get('/send-mail', function() {
+    return view('send-mail');
+});
