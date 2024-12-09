@@ -31,11 +31,33 @@ class SetupElasticsearch extends Command
                     Constants::EMAIL_ADDRESS => [Constants::TYPE => Constants::KEYWORD],
                     Constants::SUBJECT => [Constants::TYPE => Constants::TEXT],
                     Constants::BODY => [Constants::TYPE => Constants::TEXT],
-                    Constants::SENDER => [Constants::TYPE => Constants::KEYWORD],
-                    Constants::RECIPIENTS_CC => [Constants::TYPE => Constants::KEYWORD],
-                    Constants::TIMESTAMP => [Constants::TYPE => Constants::DATE],
-                    Constants::FOLDER => [Constants::TYPE => Constants::KEYWORD], // (e.g., Inbox, Sent)
+                    Constants::FROM => [
+                        Constants::TYPE => Constants::TEXT,
+                        Constants::FIELDS => [
+                            Constants::KEYWORD => [Constants::TYPE => Constants::KEYWORD],
+                        ],
+                    ],
+                    Constants::TO => [
+                        Constants::TYPE => Constants::NESTED,
+                        Constants::PROPERTIES => [
+                            Constants::EMAIL_ADDRESS => [Constants::TYPE => Constants::KEYWORD],
+                        ],
+                    ],
+                    Constants::CC => [
+                        Constants::TYPE => Constants::NESTED,
+                        Constants::PROPERTIES => [
+                            Constants::EMAIL_ADDRESS => [Constants::TYPE => Constants::KEYWORD],
+                        ],
+                    ],
+                    Constants::BCC => [
+                        Constants::TYPE => Constants::NESTED,
+                        Constants::PROPERTIES => [
+                            Constants::EMAIL_ADDRESS => [Constants::TYPE => Constants::KEYWORD],
+                        ],
+                    ],
                     Constants::IS_READ => [Constants::TYPE => Constants::BOOLEAN],
+                    Constants::RECEIVED_DATE => [Constants::TYPE => Constants::DATE],
+                    Constants::SENT_DATE => [Constants::TYPE => Constants::DATE],
                 ],
             ],
         ];

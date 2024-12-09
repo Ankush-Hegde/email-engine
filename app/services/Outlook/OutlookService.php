@@ -66,7 +66,7 @@ class OutlookService
         $response = Http::withHeaders([
             Constants::AUTHORIZATION => Constants::BEARER . ' ' . $accessToken,
             Constants::ACCEPT => 'application/json',
-        ])->get('https://graph.microsoft.com/v1.0/me/messages', [
+        ])->withOptions([Constants::VERIFY => false])->get('https://graph.microsoft.com/v1.0/me/messages', [
             '$top' => $top,
             '$skip' => $skip,
         ]);

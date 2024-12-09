@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 class Constants {
+    const TO = 'to';
     const TYPE = 'type';
     const DATE = 'date';
     const TEXT = 'text';
@@ -30,4 +31,11 @@ class Constants {
     const UNREAD_COUNT = 'unread_count';
     const EMAIL_ADDRESS = 'email_address';
     const RECIPIENTS_CC = 'recipients_cc';
+
+    const CC = 'cc';
+    const BCC = 'bcc';
+    const FROM = 'from';
+    const FIELDS = 'fields';
+    const SENT_DATE = 'sent_date';
+    const RECEIVED_DATE= 'recived_date';
 }

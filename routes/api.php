@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication\OutlookOauth\Controller as OutlookOauthController;
+use App\Http\Controllers\Email\Controller as EmailController;
 
 Route::group(['prefix' => 'v1'], function() {
 
@@ -19,5 +20,9 @@ Route::group(['prefix' => 'v1'], function() {
                 return 'hurray!!';
             });
         });
+    });
+
+    Route::group(['prefix' => 'email'], function() {
+        Route::post('fetch', [EmailController::class, 'fetchEmails']);
     });
 });

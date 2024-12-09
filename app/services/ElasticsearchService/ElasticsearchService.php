@@ -35,10 +35,12 @@ class ElasticsearchService
 
     public function search($index, $query)
     {
-        return $this->client->search([
+        $response = $this->client->search([
             Constants::INDEX => $index,
             Constants::BODY => $query,
         ]);
+
+        return $response->asArray();
     }
 
     public function getClient()
