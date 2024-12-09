@@ -59,22 +59,4 @@ class Controller extends BaseController
 
         return view('oauth.success')->with(User::ENTITY_NAME, $user);
     }
-
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            User::NAME => 'required|string|max:255',
-            User::EMAIL => 'required|email|unique:users,email',
-        ]);
-
-        $user = User::create([
-            User::NAME => $validated[User::NAME],
-            User::EMAIL => $validated[User::EMAIL],
-        ]);
-
-        return response()->json([
-            CONSTANTS::MESSAGE => 'Account created successfully!',
-            User::ENTITY_NAME => $user,
-        ]);
-    }
 }

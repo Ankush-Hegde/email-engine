@@ -5,8 +5,6 @@ use App\Http\Controllers\Authentication\OutlookOauth\Controller as OutlookOauthC
 
 Route::group(['prefix' => 'v1'], function() {
 
-    Route::post('register', [OutlookOauthController::class, 'register']);
-
     Route::group(['prefix' => 'oauth'], function() {
         Route::group(['prefix' => 'outlook'], function() {
             Route::get('generate_url', [OutlookOauthController::class, 'generate_url']);
