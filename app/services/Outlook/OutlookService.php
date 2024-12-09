@@ -35,7 +35,7 @@ class OutlookService
     {
         $url = "https://login.microsoftonline.com/common/oauth2/v2.0/token"; // keep in env
 
-        $response = Http::asForm()->withOptions(['verify' => false])->post($url, [ // ssl certificate ignored
+        $response = Http::asForm()->withOptions([Constants::VERIFY => false])->post($url, [ // ssl certificate ignored
             Constants::CLIENT_ID => $this->clientId,
             Constants::CLIENT_SECRET => $this->clientSecret,
             Constants::CODE => $code,
@@ -50,12 +50,25 @@ class OutlookService
     {
         $url = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
 
-        $response = Http::asForm()->withOptions(['verify' => false])->post($url, [ // ssl certificate ignored 
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            'refresh_token' => $refreshToken,
-            'grant_type' => 'refresh_token',
-            'redirect_uri' => $this->redirectUri,
+        $response = Http::asForm()->withOptions([Constants::VERIFY => false])->post($url, [ // ssl certificate ignored 
+            Constants::CLIENT_ID => $this->clientId,
+            Constants::CLIENT_SECRET => $this->clientSecret,
+            Constants::REFRESH_TOKEN => $refreshToken,
+            Constants::GRANT_TYPE => Constants::REFRESH_TOKEN,
+            Constants::REDIRECT_URI => $this->redirectUri,
+        ]);
+
+        return $response->json();
+    }
+
+    public function fetchEmails($accessToken, $top = 50, $skip = 0)
+    {
+        $response = Http::withHeaders([
+            Constants::AUTHORIZATION => Constants::BEARER . ' ' . $accessToken,
+            Constants::ACCEPT => 'application/json',
+        ])->get('https://graph.microsoft.com/v1.0/me/messages', [
+            '$top' => $top,
+            '$skip' => $skip,
         ]);
 
         return $response->json();
