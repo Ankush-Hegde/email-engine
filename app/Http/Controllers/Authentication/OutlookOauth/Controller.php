@@ -19,8 +19,8 @@ class Controller extends BaseController
     }
 
     public function generate_url(Request $request)
-    {        
-        return $this->OutlookService->generateAuthUrl();
+    {
+        return response()->json([Constants::REDIRECT_URI => $this->OutlookService->generateAuthUrl()], 200);
     }
 
     public function callback(Request $request)
@@ -57,7 +57,7 @@ class Controller extends BaseController
             ]
         );
 
-        return response()->json([Constants::MESSAGE => 'User registered successfully', User::ENTITY_NAME => $user]);
+        return redirect()->route('oauth.success')->with(User::ENTITY_NAME, $user);
     }
 
     public function register(Request $request)
