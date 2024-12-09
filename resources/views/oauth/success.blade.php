@@ -61,14 +61,12 @@
     </div>
 
     <script>
-        // Storing the user details in localStorage
         const userName = "{{ $user->name }}";
         const userEmail = "{{ $user->email }}";
 
         localStorage.setItem('user_name', userName);
         localStorage.setItem('user_email', userEmail);
 
-        // Redirect to the manage mails page
         document.getElementById('nextPageBtn').addEventListener('click', () => {
             window.location.href = '/manage-mails';
         });

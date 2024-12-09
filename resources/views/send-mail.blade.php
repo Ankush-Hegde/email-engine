@@ -85,21 +85,17 @@
             const content = document.getElementById('content').value;
             const recipient = document.getElementById('recipient').value;
 
+            const email = localStorage.getItem('user_email');
+            if (!email) {
+                alert('Email is not set in local storage.');
+                return;
+            }
+
             const requestBody = {
-                message: {
-                    subject: subject,
-                    body: {
-                        contentType: "Text",
-                        content: content,
-                    },
-                    toRecipients: [
-                        {
-                            emailAddress: {
-                                address: recipient,
-                            }
-                        }
-                    ]
-                }
+                email: email,
+                subject: subject,
+                body: content,
+                toRecipients: [recipient]
             };
 
             fetch('http://localhost:8000/api/v1/email/send', {
