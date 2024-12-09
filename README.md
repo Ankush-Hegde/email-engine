@@ -131,3 +131,5 @@ response<br>
  5. best practic -> SUCCESS!! [startedOn:08/12/2024] - [endedOn:08/12/2024]
  6. Extensibility -> (//todo//)
  7. Deliverables docker -> SUCCESS!! [startedOn:07/12/2024] - [endedOn:07/12/2024]
+
+view updated project on :- <code> https://github.com/Ankush-Hegde/email-engine </code>
