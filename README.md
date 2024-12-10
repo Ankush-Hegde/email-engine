@@ -1,3 +1,7 @@
+## clone the repo
+<code>git clone "https://github.com/Ankush-Hegde/email-engine"</code><br>
+<br>
+<code>cd email-engine</code>
 # to start the project
  1. start the xamp/sql server
  2. create the database email_engine
