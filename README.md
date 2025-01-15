@@ -6,7 +6,7 @@
  
  4. change .env.example to .env
  5. run the following to generate the encryption key <code>php artisan key:generate</code>.
- 6. set up elastic search by using this command<code>php artisan elasticsearch:setup</code>
+ 6. start and then set up elastic search by using this command<code>php artisan elasticsearch:setup</code>
  7. start the server using <code>php artisan start</code> command
  8. navigate to <code>localhost:8000</code> in browser and click on the outlook oauth 
  
