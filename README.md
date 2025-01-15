@@ -10,7 +10,7 @@
  
  4. change .env.example to .env
  5. run the following to generate the encryption key <code>php artisan key:generate</code>.
- 6. set up elastic search by using this command<code>php artisan elasticsearch:setup</code>
+ 6. start and then set up elastic search by using this command<code>php artisan elasticsearch:setup</code>
  7. start the server using <code>php artisan start</code> command
  8. navigate to <code>localhost:8000</code> in browser and click on the outlook oauth 
  
@@ -31,6 +31,9 @@ response
 ```
 this will return view
 ```
+| Registration | Manage Mails |
+|--------------|--------------|
+| ![registeration-git](https://github.com/user-attachments/assets/bff9a868-2c01-4d1c-8bdd-1fbce5258b0c) | ![manage-mails-git](https://github.com/user-attachments/assets/4e998b86-0d2d-4644-b015-7dc2fb816978) |
 
 ### 3. fetchMail from the microsoft graph api
 <code>post</code><code>http://localhost:8000/api/v1/email/fetch</code>
@@ -89,6 +92,8 @@ response
     }
 ]
 ```
+![fetch-email-git](https://github.com/user-attachments/assets/16b30b37-07a7-4aa1-bb0f-3e6b6d3ddb32)
+
 ### 4. send Mail
 <code>post</code><code>http://localhost:8000/api/v1/email/send</code>
 <br>body<br>
@@ -106,6 +111,9 @@ response<br>
     "message": "Email sent successfully"
 }
 ```
+| Send-mail | Send-Success |
+|--------------|--------------|
+| ![send-email](https://github.com/user-attachments/assets/bf9e5f3c-3ff1-40fd-a8fd-af58a8b1ec54) | ![sent-success-git](https://github.com/user-attachments/assets/d43ebd25-3024-4a45-9c0b-adbe18640bce) |
 
 # DB design
  as of the requirements,
